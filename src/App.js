@@ -48,6 +48,7 @@ class StreamerList extends Component {
     }
   }
 
+
   render() {
 
     const arrStreamer = myData.filter( (e) => {
