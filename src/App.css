@@ -2,13 +2,10 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
-  background-color: #101010;
+  background-color: #111;
   color: white;
 }
 
-.App {
-  text-align: center;
-}
 
 .App-logo {
 
@@ -17,17 +14,66 @@ body {
 }
 
 .App-header {
-  /*background-color: #222;*/
-  height: 150px;
   padding: 20px;
+  margin-bottom: 50px;
+  color: white;
+  text-align: center
+}
+
+
+a {
   color: white;
 }
 
-.App-intro {
-  font-size: large;
+.logo {  
+  height: 50px;
+  width: auto;
+
+  border-radius: 50%;
+  border-style: solid;
+  border-color: white;
+  border-width: 3px;
+
 }
 
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+table {
+  background-color: #3b1561;
+  color: white;
+}
+
+tr {
+  cursor: pointer;
+  width: 100%;
+}
+
+td {
+  text-align: center;
+}
+
+.Offline {
+  font-style: italic;
+}
+
+.Online {
+  font-style: italic;
+}
+
+.hvr-fade {
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px transparent;
+  overflow: hidden;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: color, background-color;
+  transition-property: color, background-color;
+}
+.hvr-fade:hover, .hvr-fade:focus, .hvr-fade:active {
+  background-color: #6a477d;
+  color: white;
+}
+
+.pure-button {
+  display: block;
 }
