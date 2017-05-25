@@ -20,18 +20,22 @@ class App extends Component {
     });
   }
 
+  getFilter() {
+    return this.state.filter;
+  }
+
   render() {
     return (
       <div className="App">
         <div className="pure-g">
-          <div className="pure-u-7-24"></div>
-          <div className="pure-u-10-24">
-            <Header setFilter={this.setFilter.bind(this)}></Header>
+          <div className="pure-u-0 pure-u-sm-2-24 pure-u-md-4-24 pure-u-lg-4-24"></div>
+          <div className="pure-u-1 pure-u-sm-20-24 pure-u-md-16-24 pure-u-lg-16-24">
+            <Header getFilter={this.getFilter.bind(this)} setFilter={this.setFilter.bind(this)}></Header>
           </div>
         </div>
         <div className="pure-g">
-          <div className="pure-u-7-24"></div>
-          <div className="pure-u-10-24">
+          <div className="pure-u-0 pure-u-sm-2-24 pure-u-md-4-24 pure-u-lg-4-24"></div>
+          <div className="pure-u-1 pure-u-sm-20-24 pure-u-md-16-24 pure-u-lg-16-24">
             <StreamerList filter={this.state.filter}></StreamerList>
           </div>
         </div>
@@ -44,8 +48,14 @@ class Header extends Component {
 
 
   handleClick (e) {
+
     e.persist();
+
     this.props.setFilter(e.target.value);
+  }
+
+  handleHover( e ) {
+    e.persist();
   }
 
   render() {
@@ -55,11 +65,14 @@ class Header extends Component {
           <div className="pure-u-5-24"></div>
           <div className="pure-u-14-24">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/26/Twitch_logo.svg/1280px-Twitch_logo.svg.png" className="App-logo" alt="logo" />
+            <h2 id="Title">Streamers Watch</h2>
           </div>
           <div className="pure-u-5-24">
-            <button className="pure-button" onClick={this.handleClick.bind(this)} value="All">All</button>
-            <button className="pure-button" onClick={this.handleClick.bind(this)} value="Online">Online</button>
-            <button className="pure-button" onClick={this.handleClick.bind(this)} value="Offline">Offline</button>
+            <div className="buttonContainer">
+              <Button filter={this.props.getFilter()} onClick={this.handleClick.bind(this)} value="All"></Button>
+              <Button filter={this.props.getFilter()} onClick={this.handleClick.bind(this)} value="Online"></Button>
+              <Button filter={this.props.getFilter()} onClick={this.handleClick.bind(this)} value="Offline"></Button>
+            </div>
           </div>
         </div>
       </div>
@@ -67,11 +80,53 @@ class Header extends Component {
   }
 }
 
+class Button extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      selected: this.props.filter === this.props.value ? true : false,
+      fakeSelected: false
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.state = {
+      ...this.state,
+      selected: nextProps.filter === nextProps.value ? true : false,
+    }
+  }
+
+  isSelected() {
+    console.log(this.state.selected, this.state.fakeSelected);
+    return this.state.selected || this.state.fakeSelected ? "selected" : "";
+  }
+
+  handleHover(hovered,e) {
+    this.setState( {
+        ...this.state,
+        fakeSelected: hovered
+        });
+    
+  }
+
+
+  getText() {
+    return this.state.selected || this.state.fakeSelected ? this.props.value : "";
+  }
+
+  render() {
+    return (
+      <button onMouseOut={this.handleHover.bind(this,false)} onMouseOver={this.handleHover.bind(this,true)} className={"pure-button "+this.isSelected()} onClick={this.props.onClick} value={this.props.value}>
+        <div className={`placeholder placeholder-${this.props.value}`}></div>
+        {" "+this.getText()}
+      </button>
+    )
+  }
+}
+
 class StreamerList extends Component {
-
-  
-
-
   render() {
 
     const arrStreamer = myData.filter( (e) => {
@@ -89,14 +144,15 @@ class StreamerList extends Component {
       return <Streamer key={i} data={e}> </Streamer>
     })
 
-    console.log(arrStreamer);
 
     return(
-      <table className="pure-table pure-table-horizontal">
-        <tbody>
-          {arrStreamer}
-        </tbody>
-      </table>
+      <div className="tableContainer">
+        <table className="pure-table pure-table-horizontal">
+          <tbody>
+            {arrStreamer}
+          </tbody>
+        </table>
+      </div>
     )
   }
 }
@@ -115,7 +171,7 @@ class Streamer extends Component {
 
 
     const url = data.stream ? data.stream.url : "";
-    const logo = data.stream ? data.stream.logo : "http://lorempixel.com/100/100/?param="+Math.floor(Math.random()*100);
+    const logo = data.stream ? data.stream.logo : "http://lorempixel.com/50/50/?param="+Math.floor(Math.random()*100);
     const displayName = data.stream ? data.stream.display_name : data.display_name;
     let status = data.stream ? data.stream.status : "Offline";
     const classStatus = data.stream ? "Online" : "Offline";
@@ -126,7 +182,7 @@ class Streamer extends Component {
 
     return (
         <tr onClick={ () => { this.handleOnStreamerClick(url) } } className="hvr-fade">
-          <td><img src={logo} className="logo" /></td>
+          <td><img src={logo} className="logo" alt="channelLogo"/></td>
           <td>{displayName}</td>
           <td className={classStatus}>{status}</td>
         </tr>

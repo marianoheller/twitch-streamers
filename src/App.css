@@ -1,3 +1,6 @@
+
+
+
 body {
   margin: 0;
   padding: 0;
@@ -6,6 +9,9 @@ body {
   color: white;
 }
 
+#Title {
+  font-family: TwitchFont, sans-serif;
+}
 
 .App-logo {
 
@@ -15,9 +21,12 @@ body {
 
 .App-header {
   padding: 20px;
-  margin-bottom: 50px;
+  padding-left: 0px;
+  padding-right: 0px;
   color: white;
-  text-align: center
+  text-align: center;
+
+  background-color: #333;
 }
 
 
@@ -39,15 +48,30 @@ a {
 table {
   background-color: #3b1561;
   color: white;
+
+  border-style: solid !important;
+  border-width: 2px !important;
+  border-color: white !important;
+  border-collapse: initial !important;
+
+  width: 100%;
+  
 }
+
+tableContainer {
+  text-align: center;
+}
+
 
 tr {
   cursor: pointer;
   width: 100%;
+  
 }
 
 td {
   text-align: center;
+
 }
 
 .Offline {
@@ -75,5 +99,60 @@ td {
 }
 
 .pure-button {
+  font-size: small;
+
   display: block;
+  float: right;
+  clear: right;
+  width: 20px; 
+
+  margin-bottom: 5px;
+}
+
+.pure-button:hover {
+  width: 70px;
+  transition: width 0.2s;
+  transition-timing-function: ease-out;
+}
+
+.selected {
+  width: 70px;
+}
+.placeholder {
+  width: 12px;
+  height: 12px;
+
+
+  border-radius: 50%;
+  border-width: 2px;
+  border-color: black;
+
+  vertical-align: middle;
+  line-height: normal;
+  display: inline-block;
+}
+
+.placeholder-All {
+  background-color: brown;
+}
+
+.placeholder-Online {
+  background-color: green;
+}
+
+.placeholder-Offline {
+  background-color: red;
+}
+
+.buttonContainer {
+  text-align: right;
+  vertical-align: center;
+}
+
+
+@media screen and (min-width: 48em) {
+
+  .App-logo {
+    height: 100px;
+  }
 }
