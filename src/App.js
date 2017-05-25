@@ -99,7 +99,6 @@ class Button extends Component {
   }
 
   isSelected() {
-    console.log(this.state.selected, this.state.fakeSelected);
     return this.state.selected || this.state.fakeSelected ? "selected" : "";
   }
 
@@ -171,7 +170,7 @@ class Streamer extends Component {
 
 
     const url = data.stream ? data.stream.url : "";
-    const logo = data.stream ? data.stream.logo : "http://lorempixel.com/50/50/?param="+Math.floor(Math.random()*100);
+    const logo = data.stream ? data.stream.logo : "https://lorempixel.com/50/50/?param="+Math.floor(Math.random()*100);
     const displayName = data.stream ? data.stream.display_name : data.display_name;
     let status = data.stream ? data.stream.status : "Offline";
     const classStatus = data.stream ? "Online" : "Offline";
